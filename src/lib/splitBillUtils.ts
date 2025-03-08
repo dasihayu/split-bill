@@ -26,8 +26,7 @@ export function calculateBalances(
 
 // Fungsi untuk menyederhanakan pembayaran
 export function calculateSettlements(
-  balances: Map<string, number>,
-  people: Person[]
+  balances: Map<string, number>
 ): Settlement[] {
   const settlements: Settlement[] = [];
   const roundedBalances = new Map<string, number>();
