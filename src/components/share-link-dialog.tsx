@@ -1,7 +1,7 @@
 // src/components/share-link-dialog.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Dialog,
   DialogContent,
@@ -38,14 +38,7 @@ export function ShareLinkDialog({
   const [isGenerating, setIsGenerating] = useState(false);
   const [isShortened, setIsShortened] = useState(false);
 
-  useEffect(() => {
-    if (open) {
-      setIsShortened(false);
-      generateShareLink();
-    }
-  }, [open, includeExpenses]);
-
-  const generateShareLink = async () => {
+  const generateShareLink = useCallback(async () => {
     setIsGenerating(true);
 
     try {
@@ -74,7 +67,14 @@ export function ShareLinkDialog({
     } finally {
       setIsGenerating(false);
     }
-  };
+  }, [group, includeExpenses]);
+
+  useEffect(() => {
+    if (open) {
+      setIsShortened(false);
+      generateShareLink();
+    }
+  }, [open, includeExpenses, generateShareLink]);
 
   const shortenShareLink = async () => {
     if (!shareLink || isShortened) return;
