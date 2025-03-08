@@ -16,10 +16,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Group } from "@/types";
 import { toast } from "sonner";
 import { Copy, Share2 } from "lucide-react";
-import {
-  compressToEncodedURIComponent,
-  decompressFromEncodedURIComponent,
-} from "@/lib/compression";
+import { compressToEncodedURIComponent } from "@/lib/compression";
 import { shortenUrl } from "@/lib/url-shortener";
 
 interface ShareLinkDialogProps {
