@@ -13,14 +13,14 @@ async function shortenWithTinyURL(longUrl: string): Promise<string> {
       throw new Error("TinyURL API error");
     }
     return await response.text();
-  } catch (error) {
-    console.error("Error shortening URL with TinyURL:", error);
-    throw error;
+  } catch {
+    console.error("Failed to shorten URL with TinyURL");
+    return longUrl;
   }
 }
 
 // Rebrandly API (optional, perlu API key)
-async function shortenWithRebrandly(
+async function _shortenWithRebrandly(
   longUrl: string,
   apiKey: string
 ): Promise<string> {
@@ -118,7 +118,7 @@ export async function shortenUrl(longUrl: string): Promise<string> {
     return await shortenWithTinyURL(longUrl);
   } catch (error: unknown) {
     console.error("Error shortening URL:", error);
-    throw error;
+    return longUrl;
   }
 }
 
