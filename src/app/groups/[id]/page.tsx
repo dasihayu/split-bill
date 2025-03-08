@@ -32,42 +32,45 @@ import { AddPersonDialog } from "@/components/add-person-dialog";
 import { toast } from "sonner";
 import { ShareLinkDialog } from "@/components/share-link-dialog";
 
-export default function GroupDetailPage({
-  params,
-}: {
-  params: { id: string };
-}) {
-  const { id } = params;
+interface PageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default function GroupDetailPage({ params }: PageProps) {
   const [group, setGroup] = useState<Group | null>(null);
   const [showAddExpenseDialog, setShowAddExpenseDialog] = useState(false);
   const [showAddPersonDialog, setShowAddPersonDialog] = useState(false);
   const [showShareDialog, setShowShareDialog] = useState(false);
   const [settlements, setSettlements] = useState<Settlement[]>([]);
   const router = useRouter();
-  // Using sonner toast
 
   useEffect(() => {
-    const loadedGroup = getGroup(id);
-    if (!loadedGroup) {
-      toast.error("Grup tidak ditemukan");
-      router.push("/");
-      return;
-    }
-    setGroup(loadedGroup);
+    const loadGroup = async () => {
+      const { id } = await params;
+      const loadedGroup = getGroup(id);
+      if (!loadedGroup) {
+        toast.error("Grup tidak ditemukan");
+        router.push("/");
+        return;
+      }
+      setGroup(loadedGroup);
 
-    // Hitung settlements
-    if (loadedGroup.expenses.length > 0) {
-      const balances = calculateBalances(
-        loadedGroup.people,
-        loadedGroup.expenses
-      );
-      const calculatedSettlements = calculateSettlements(
-        balances,
-        loadedGroup.people
-      );
-      setSettlements(calculatedSettlements);
-    }
-  }, [id, router]);
+      // Hitung settlements
+      if (loadedGroup.expenses.length > 0) {
+        const balances = calculateBalances(
+          loadedGroup.people,
+          loadedGroup.expenses
+        );
+        const calculatedSettlements = calculateSettlements(
+          balances,
+          loadedGroup.people
+        );
+        setSettlements(calculatedSettlements);
+      }
+    };
+
+    loadGroup();
+  }, [params, router]);
 
   const handleAddExpense = (expense: Expense) => {
     if (!group) return;
