@@ -19,36 +19,6 @@ async function shortenWithTinyURL(longUrl: string): Promise<string> {
   }
 }
 
-// Rebrandly API (optional, perlu API key)
-async function _shortenWithRebrandly(
-  longUrl: string,
-  apiKey: string
-): Promise<string> {
-  try {
-    const response = await fetch("https://api.rebrandly.com/v1/links", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        apikey: apiKey,
-      },
-      body: JSON.stringify({
-        destination: longUrl,
-        domain: { fullName: "rebrand.ly" },
-      }),
-    });
-
-    if (!response.ok) {
-      throw new Error("Rebrandly API error");
-    }
-
-    const data = await response.json();
-    return `https://${data.shortUrl}`;
-  } catch (error) {
-    console.error("Error shortening URL with Rebrandly:", error);
-    throw error;
-  }
-}
-
 // Local URL shortener menggunakan localStorage
 // Ini adalah fallback jika API external tidak tersedia
 class LocalUrlShortener {
@@ -58,7 +28,7 @@ class LocalUrlShortener {
     try {
       const data = localStorage.getItem(this.storageKey);
       return data ? JSON.parse(data) : {};
-    } catch (e) {
+    } catch {
       return {};
     }
   }
