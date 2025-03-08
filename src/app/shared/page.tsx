@@ -11,7 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { ArrowLeft, Receipt, Users, Calculator } from "lucide-react";
+import { ArrowLeft, Receipt, Calculator } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { decompressFromEncodedURIComponent } from "@/lib/compression";
 import { Group, Settlement } from "@/types";
@@ -341,13 +341,13 @@ export default function SharedGroupPage() {
                           ) : (
                             // Format lama (paidBy, splitWith)
                             <div className="text-sm">
-                              {/* @ts-ignore - compatibility with old format */}
+                              {/* @ts-expect-error - compatibility with old format */}
                               <p>
                                 Dibayar oleh: {findPersonName(expense.paidBy)}
                               </p>
                               <p className="mt-1">Dibagi dengan:</p>
                               <div className="flex flex-wrap gap-1 mt-1">
-                                {/* @ts-ignore - compatibility with old format */}
+                                {/* @ts-expect-error - compatibility with old format */}
                                 {(expense.splitWith || []).map(
                                   (personId, idx) => (
                                     <span
@@ -418,7 +418,7 @@ export default function SharedGroupPage() {
                                 }
                                 // Filter untuk format lama (splitWith)
                                 else {
-                                  // @ts-ignore - compatibility with old format
+                                  // @ts-expect-error - compatibility with old format
                                   return (
                                     expense.splitWith &&
                                     expense.splitWith.includes(person.id)
@@ -440,9 +440,9 @@ export default function SharedGroupPage() {
                                 }
                                 // Untuk format lama (amount, splitWith)
                                 else {
-                                  // @ts-ignore - compatibility with old format
+                                  // @ts-expect-error - compatibility with old format
                                   const amount = expense.amount;
-                                  // @ts-ignore - compatibility with old format
+                                  // @ts-expect-error - compatibility with old format
                                   const splitWith = expense.splitWith || [];
 
                                   if (splitWith.includes(person.id)) {
@@ -491,7 +491,7 @@ export default function SharedGroupPage() {
                               }
                               // Cek untuk format lama (splitWith)
                               else {
-                                // @ts-ignore - compatibility with old format
+                                // @ts-expect-error - compatibility with old format
                                 const splitWith = expense.splitWith || [];
                                 return splitWith.includes(person.id);
                               }
