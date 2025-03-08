@@ -69,14 +69,6 @@ export function AddExpenseDialog({
     setExpenseItems([]);
   };
 
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("id-ID", {
-      style: "currency",
-      currency: "IDR",
-      minimumFractionDigits: 0,
-    }).format(amount);
-  };
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
