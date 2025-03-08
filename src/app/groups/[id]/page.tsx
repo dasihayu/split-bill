@@ -1,7 +1,6 @@
-// src/app/groups/[id]/page.tsx
 "use client";
 
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
   ArrowLeft,
@@ -38,7 +37,7 @@ export default function GroupDetailPage({
 }: {
   params: { id: string };
 }) {
-  const { id } = use(params);
+  const { id } = params;
   const [group, setGroup] = useState<Group | null>(null);
   const [showAddExpenseDialog, setShowAddExpenseDialog] = useState(false);
   const [showAddPersonDialog, setShowAddPersonDialog] = useState(false);
