@@ -324,15 +324,15 @@ export default function GroupDetailPage({
                           ) : (
                             // Format lama (paidBy, splitWith)
                             <div className="text-sm">
-                              {/* @ts-ignore - compatibility with old format */}
+                              {/* @ts-expect-error - compatibility with old format */}
                               <p>
                                 Dibayar oleh: {findPersonName(expense.paidBy)}
                               </p>
                               <p className="mt-1">Dibagi dengan:</p>
                               <div className="flex flex-wrap gap-1 mt-1">
-                                {/* @ts-ignore - compatibility with old format */}
+                                {/* @ts-expect-error - compatibility with old format */}
                                 {(expense.splitWith || []).map(
-                                  (personId, idx) => (
+                                  (personId: string, idx: number) => (
                                     <span
                                       key={idx}
                                       className="bg-gray-100 px-2 py-1 rounded text-xs"
@@ -404,7 +404,7 @@ export default function GroupDetailPage({
                                 }
                                 // Filter untuk format lama (splitWith)
                                 else {
-                                  // @ts-ignore - compatibility with old format
+                                  // @ts-expect-error - compatibility with old format
                                   return (
                                     expense.splitWith &&
                                     expense.splitWith.includes(person.id)
@@ -426,9 +426,9 @@ export default function GroupDetailPage({
                                 }
                                 // Untuk format lama (amount, splitWith)
                                 else {
-                                  // @ts-ignore - compatibility with old format
+                                  // @ts-expect-error - compatibility with old format
                                   const amount = expense.amount;
-                                  // @ts-ignore - compatibility with old format
+                                  // @ts-expect-error - compatibility with old format
                                   const splitWith = expense.splitWith || [];
 
                                   if (splitWith.includes(person.id)) {
@@ -477,7 +477,7 @@ export default function GroupDetailPage({
                               }
                               // Cek untuk format lama (splitWith)
                               else {
-                                // @ts-ignore - compatibility with old format
+                                // @ts-expect-error - compatibility with old format
                                 const splitWith = expense.splitWith || [];
                                 return splitWith.includes(person.id);
                               }
